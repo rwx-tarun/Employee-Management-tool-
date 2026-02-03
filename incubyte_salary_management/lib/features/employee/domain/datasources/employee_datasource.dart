@@ -1,23 +1,30 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class EmployeeLocalDataSource {
+class EmployeeDbService {
+  static const _dbName = 'employees.db';
+  static const _tableName = 'employees';
+
   Database? _db;
+  final String? testPath; // For testing
+
+  EmployeeDbService({this.testPath});
 
   Future<Database> get database async {
-    _db ??= await _initDb();
+    if (_db != null) return _db!;
+    _db = await _initDb();
     return _db!;
   }
 
   Future<Database> _initDb() async {
-    final path = join(await getDatabasesPath(), 'employees.db');
+    final path = testPath ?? join(await getDatabasesPath(), _dbName);
 
     return openDatabase(
       path,
       version: 1,
       onCreate: (db, _) async {
         await db.execute('''
-          CREATE TABLE employees(
+          CREATE TABLE $_tableName (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             full_name TEXT,
             job_title TEXT,
@@ -29,28 +36,43 @@ class EmployeeLocalDataSource {
     );
   }
 
-  Future<List<Map<String, dynamic>>> getAll() async {
+  // ---------- CRUD ----------
+
+  Future<int> insert(Map<String, dynamic> data) async {
     final db = await database;
-    return db.query('employees');
+    return db.insert(_tableName, data);
   }
 
-  Future<void> insert(Map<String, dynamic> data) async {
+  Future<List<Map<String, dynamic>>> fetchAll() async {
     final db = await database;
-    await db.insert('employees', data);
+    return db.query(_tableName);
   }
 
-  Future<void> update(Map<String, dynamic> data) async {
+  Future<int> update(Map<String, dynamic> data) async {
     final db = await database;
-    await db.update(
-      'employees',
+    return db.update(
+      _tableName,
       data,
       where: 'id = ?',
       whereArgs: [data['id']],
     );
   }
 
-  Future<void> delete(int id) async {
+  Future<int> delete(int id) async {
     final db = await database;
-    await db.delete('employees', where: 'id = ?', whereArgs: [id]);
+    return db.delete(_tableName, where: 'id = ?', whereArgs: [id]);
+  }
+
+  // For testing - close and delete database
+  Future<void> close() async {
+    await _db?.close();
+    _db = null;
+  }
+
+  Future<void> deleteDatabase() async {
+    await close();
+    if (testPath != null) {
+      await databaseFactory.deleteDatabase(testPath!);
+    }
   }
 }

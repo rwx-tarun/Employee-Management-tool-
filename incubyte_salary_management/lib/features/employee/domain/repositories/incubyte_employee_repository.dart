@@ -4,13 +4,13 @@ import 'package:incubyte_salary_management/features/employee/domain/datasources/
 import 'package:incubyte_salary_management/features/employee/domain/models/employee_model.dart';
 
 class IncubyteEmployeeRepository implements EmployeeRepository {
-  final EmployeeLocalDataSource localDataSource;
+  final EmployeeDbService localDataSource;
 
   IncubyteEmployeeRepository(this.localDataSource);
 
   @override
   Future<List<Employee>> getEmployees() async {
-    final result = await localDataSource.getAll();
+    final result = await localDataSource.fetchAll();
     return result.map(EmployeeModel.fromMap).toList();
   }
 
