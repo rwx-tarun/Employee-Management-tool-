@@ -17,8 +17,6 @@
 - [Getting Started](#-getting-started)
 - [Running Tests](#-running-tests)
 - [Architecture](#-architecture)
-- [Code Examples](#-code-examples)
-- [Contributing](#-contributing)
 
 ---
 
