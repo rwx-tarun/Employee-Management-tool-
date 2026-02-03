@@ -1,78 +1,383 @@
-Incubyte Salary Management
-A Flutter application for managing employee salary records with SQLite database integration.
-📋 Overview
-This project demonstrates a clean architecture approach to building a Flutter application with local database persistence using SQLite. It includes comprehensive test coverage for database operations, repository layer, and data models.
-✨ Features
+# 💼 Incubyte Salary Management
 
-Employee CRUD operations (Create, Read, Update, Delete)
-SQLite database integration
-Clean architecture with repository pattern
-Comprehensive unit tests
-In-memory database testing
+> A Flutter application for managing employee salary records with SQLite database integration and comprehensive test coverage.
 
-🏗️ Project Structure
+[![Flutter](https://img.shields.io/badge/Flutter-3.0+-02569B?logo=flutter)](https://flutter.dev)
+[![Dart](https://img.shields.io/badge/Dart-3.0+-0175C2?logo=dart)](https://dart.dev)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Test Coverage](#-test-coverage)
+- [Getting Started](#-getting-started)
+- [Running Tests](#-running-tests)
+- [Architecture](#-architecture)
+- [Code Examples](#-code-examples)
+- [Contributing](#-contributing)
+
+---
+
+## 🎯 Overview
+
+This project demonstrates a **clean architecture** approach to building a Flutter application with local database persistence using SQLite. It showcases best practices in:
+
+- 🏗️ Clean Architecture pattern
+- 🧪 Comprehensive unit testing
+- 💾 SQLite database integration
+- 🎭 Repository pattern implementation
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|---------|-------------|
+| 📝 **CRUD Operations** | Create, Read, Update, Delete employee records |
+| 💾 **SQLite Integration** | Persistent local database storage |
+| 🏛️ **Clean Architecture** | Separation of concerns with repository pattern |
+| 🧪 **Test Coverage** | Comprehensive unit tests for all layers |
+| 🚀 **In-Memory Testing** | Fast, isolated database tests |
+
+---
+
+## 🏗️ Project Structure
+```
 lib/
 └── features/
     └── employee/
         ├── data/
         │   ├── entities/
-        │   │   └── employee.dart
+        │   │   └── employee.dart                    # Domain entity
         │   └── repositories/
-        │       └── employee_repository.dart
+        │       └── employee_repository.dart         # Repository interface
         └── domain/
             ├── datasources/
-            │   └── employee_datasource.dart
+            │   └── employee_datasource.dart         # SQLite service
             ├── models/
-            │   └── employee_model.dart
+            │   └── employee_model.dart              # Data transfer object
             └── repositories/
-                └── incubyte_employee_repository.dart
-🧪 Test Coverage
-The project includes 3 comprehensive test suites:
-1. Database Layer Tests (employee_datasource_test.dart)
-Tests the SQLite database operations:
+                └── incubyte_employee_repository.dart # Repository implementation
 
+test/
+└── features/
+    └── employee/
+        ├── domain/
+        │   ├── datasources/
+        │   │   └── employee_datasource_test.dart    # Database tests
+        │   ├── models/
+        │   │   └── employee_model_test.dart         # Model tests
+        │   └── repositories/
+        │       └── incubyte_employee_repository_test.dart # Repository tests
+```
+
+---
+
+## 🧪 Test Coverage
+
+The project includes **3 comprehensive test suites** covering all layers:
+
+### 1️⃣ Database Layer Tests
+**File:** `employee_datasource_test.dart`
+
+Tests SQLite database operations with in-memory database:
+```dart
 ✅ Insert and fetch employees
-✅ Update employee records
+✅ Update employee records  
 ✅ Delete employee records
+```
 
-2. Repository Layer Tests (incubyte_employee_repository_test.dart)
-Tests the repository pattern implementation:
+**Key Features:**
+- Uses `sqflite_common_ffi` for testing
+- In-memory database for fast execution
+- Isolated test environment
 
+---
+
+### 2️⃣ Repository Layer Tests
+**File:** `incubyte_employee_repository_test.dart`
+
+Tests repository pattern implementation with mocks:
+```dart
 ✅ Fetching employees through repository
 ✅ Adding employees through repository
-✅ Proper abstraction and mocking
+✅ Proper abstraction and dependency injection
+```
 
-3. Model Tests (employee_model_test.dart)
-Tests data model serialization:
+**Key Features:**
+- Uses `mocktail` for mocking
+- Tests business logic isolation
+- Validates repository contract
 
+---
+
+### 3️⃣ Model Tests
+**File:** `employee_model_test.dart`
+
+Tests data model serialization and deserialization:
+```dart
 ✅ toMap() conversion
 ✅ fromMap() conversion
 ✅ Data integrity validation
+```
 
-🚀 Getting Started
-Prerequisites
+**Key Features:**
+- Ensures proper data transformation
+- Validates field mapping
+- Type safety verification
 
-Flutter SDK (3.0 or higher)
-Dart SDK (3.0 or higher)
+---
 
-Installation
+## 🚀 Getting Started
 
-Clone the repository:
+### Prerequisites
 
-bashgit clone https://github.com/yourusername/incubyte_salary_management.git
-cd incubyte_salary_management
+Before you begin, ensure you have installed:
 
-Install dependencies:
+- [Flutter SDK](https://flutter.dev/docs/get-started/install) (3.0 or higher)
+- [Dart SDK](https://dart.dev/get-dart) (3.0 or higher)
+- An IDE (VS Code, Android Studio, or IntelliJ)
 
-bashflutter pub get
+### Installation
 
-Run the app:
+1. **Clone the repository**
+```bash
+   git clone https://github.com/yourusername/incubyte_salary_management.git
+   cd incubyte_salary_management
+```
 
-bashflutter run
-🧪 Running Tests
-Run all tests:
-bashflutter test
-Run specific test file:
-bashflutter test test/features/employee/domain/datasources/employee_datasource_test.dart
-Run tests with coverage:
-bashflutter test --coverage
+2. **Install dependencies**
+```bash
+   flutter pub get
+```
+
+3. **Run the app**
+```bash
+   flutter run
+```
+
+---
+
+## 🧪 Running Tests
+
+### Run all tests
+```bash
+flutter test
+```
+
+### Run specific test file
+```bash
+flutter test test/features/employee/domain/datasources/employee_datasource_test.dart
+```
+
+### Run tests with coverage
+```bash
+flutter test --coverage
+```
+
+### View coverage report
+```bash
+# Generate HTML report (requires lcov)
+genhtml coverage/lcov.info -o coverage/html
+open coverage/html/index.html
+```
+
+---
+
+## 📦 Dependencies
+
+### Main Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `sqflite` | ^2.0.0 | SQLite database integration |
+| `path` | ^1.8.0 | Path manipulation utilities |
+
+### Dev Dependencies
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `flutter_test` | sdk | Testing framework |
+| `mocktail` | ^1.0.0 | Mocking library |
+| `sqflite_common_ffi` | ^2.0.0 | SQLite FFI for testing |
+
+---
+
+## 🏛️ Architecture
+
+This project follows **Clean Architecture** principles with clear separation of concerns:
+```
+┌─────────────────────────────────────────────┐
+│         Presentation Layer (Future)         │
+│  ┌─────────────────────────────────────┐   │
+│  │   UI Components & State Management  │   │
+│  └─────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+                     ↓
+┌─────────────────────────────────────────────┐
+│            Domain Layer                      │
+│  ┌─────────────────────────────────────┐   │
+│  │  Business Logic & Repository        │   │
+│  │  Interfaces (EmployeeRepository)    │   │
+│  └─────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+                     ↓
+┌─────────────────────────────────────────────┐
+│             Data Layer                       │
+│  ┌─────────────────────────────────────┐   │
+│  │  Database Operations & Entities     │   │
+│  │  (EmployeeDbService)                │   │
+│  └─────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+```
+
+### Key Components
+
+| Component | Responsibility |
+|-----------|----------------|
+| **EmployeeDbService** | Direct SQLite database operations |
+| **EmployeeRepository** | Abstract repository interface |
+| **IncubyteEmployeeRepository** | Concrete repository implementation |
+| **Employee** | Domain entity |
+| **EmployeeModel** | Data transfer object |
+
+---
+
+## 📊 Employee Schema
+```sql
+CREATE TABLE employees (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  full_name TEXT NOT NULL,
+  job_title TEXT NOT NULL,
+  country TEXT NOT NULL,
+  salary REAL NOT NULL
+);
+```
+
+---
+
+## 💻 Code Examples
+
+### Adding an Employee
+```dart
+final employee = Employee(
+  fullName: 'Jane Doe',
+  jobTitle: 'Software Engineer',
+  country: 'USA',
+  salary: 75000,
+);
+
+await repository.addEmployee(employee);
+```
+
+### Fetching All Employees
+```dart
+final employees = await repository.getEmployees();
+
+for (var employee in employees) {
+  print('${employee.fullName} - ${employee.jobTitle}');
+}
+```
+
+### Updating an Employee
+```dart
+await dbService.update({
+  'id': 1,
+  'full_name': 'John Updated',
+  'job_title': 'Senior Developer',
+  'country': 'India',
+  'salary': 80000,
+});
+```
+
+### Deleting an Employee
+```dart
+await dbService.delete(employeeId);
+```
+
+---
+
+## 🧰 Testing Strategy
+
+### Test Pyramid
+```
+        ┌─────────┐
+       /   E2E     \      ← (Future)
+      /─────────────\
+     /   Integration \    ← (Future)
+    /─────────────────\
+   /    Unit Tests     \  ← ✅ Current Focus
+  /─────────────────────\
+```
+
+### Current Coverage
+
+- ✅ **Unit Tests**: Testing individual components in isolation
+- ✅ **Mock Objects**: Using `mocktail` for dependency mocking
+- ✅ **In-Memory Database**: Fast, isolated SQLite tests
+- ✅ **Test Isolation**: Fresh database per test
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. **Fork** the project
+2. **Create** your feature branch
+```bash
+   git checkout -b feature/AmazingFeature
+```
+3. **Commit** your changes
+```bash
+   git commit -m 'Add some AmazingFeature'
+```
+4. **Push** to the branch
+```bash
+   git push origin feature/AmazingFeature
+```
+5. **Open** a Pull Request
+
+### Code Style
+
+- Follow [Effective Dart](https://dart.dev/guides/language/effective-dart) guidelines
+- Maintain test coverage above 80%
+- Write meaningful commit messages
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Twitter: [@yourhandle](https://twitter.com/yourhandle)
+- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
+
+---
+
+## 🙏 Acknowledgments
+
+- 🎯 **Incubyte** for the opportunity
+- 💙 **Flutter Team** for excellent documentation
+- 💾 **SQLite** for reliable local storage
+- 🧪 **Mocktail** for elegant mocking
+
+---
+
+<div align="center">
+
+**⭐ Star this repo if you find it helpful!**
+
+Made with ❤️ for Incubyte Technical Assessment
+
+</div>
